@@ -1,5 +1,6 @@
 import numpy as np
 import csv
+from pathlib import Path
 
 
 def parse_line(line):
@@ -32,7 +33,8 @@ def filter_trace(comp_dict, percent_cutoff):
     comp_dict: dictionary
         key=isotope
         value=atomic density
-    percent_cutoff:
+    percent_cutoff: float
+        percent cutoff for ignoring isotopes
 
     Returns
     -------
@@ -63,7 +65,7 @@ def filter_trace(comp_dict, percent_cutoff):
 
 
 
-def bumat_read(bumat_file):
+def bumat_read(bumat_file, percent_cutoff):
     """reads serpent .bumat output file and 
        stores the composition in a dictionary
 
@@ -71,6 +73,8 @@ def bumat_read(bumat_file):
     ----------
     bumat_file: str
         bumat file path
+    percent_cutoff: float
+        percent cutoff for ignoring isotopes
 
     Returns
     -------
@@ -88,7 +92,7 @@ def bumat_read(bumat_file):
         # isotope as key, atomic density as value
         comp_dict[parsed[0]] = parsed[1]
 
-    comp_dict = filter_trace(comp_dict, 0.01)
+    comp_dict = filter_trace(comp_dict, percent_cutoff)
     return comp_dict
 
 
@@ -213,7 +217,20 @@ def csv_render_list_dict(csv_filename, list_dict):
 
         return True
 
-comp_dict = bumat_read('./output/publ_core.bumat1')
-csv_render_dict('composition.csv', comp_dict, ['Isotope', 'Atomic Density'])
+filename = './output/publ_core'
+# render csv for all bumat files generated (from 0 to x)
+
+bumat_num = 0
+while True:
+    bumatfile = filename + '.bumat' + str(bumat_num)
+    bumatfile_path = Path(bumatfile)
+    if bumatfile_path.is_file():
+        csv_filename = 'composition' + str(bumat_num) + '.csv'
+        comp_dict = bumat_read(bumatfile, 0.01)
+        csv_render_dict(csv_filename, comp_dict, ['Isotope', 'Atomic Density'])
+        bumat_num = bumat_num + 1
+    else:
+        break    
+
 keff_dict = search_keff('./output/publ_core_res.m')
 csv_render_list_dict('keff.csv', keff_dict)
