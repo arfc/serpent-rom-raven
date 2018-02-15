@@ -14,10 +14,12 @@ def read_input_file(filename):
     # stores tuples (density, atom or mass)
     dense_dict = {}
     for line in lines:
+
+        # filters out whole-line comments
         if line[0] == '%' or line.isspace():
             x = 0
+
         else: 
-            print(line)
             # filter out the comments in the same line
             if line.find('%') != -1:
                 line = line[:line.find('%')]
@@ -54,9 +56,11 @@ def read_input_file(filename):
                 timestep = float(line)
 
             elif current_section == 'mat':
+                # this would be better to say 
+                # "if line.split()[0] is not a number"
                 if line.split()[0] == 'rgb':
-                    # whatis this rgb
-                    print('what is this rgb')
+                    # colors for geometry platter
+                    print('ignoring rgb')
                 else:
                     isotope, fraction = get_isotope_frac_list(line)
                     comp_dict[key][isotope] = abs(float(fraction)) 
