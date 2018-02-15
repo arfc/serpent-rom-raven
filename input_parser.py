@@ -2,7 +2,10 @@ def read_input_file(filename):
     keyword_dict = {}
     fileobject = open(filename)
     lines = fileobject.readlines()
+    # string changes to tell what `block` of input it is currently in
     current_section = ''
+    # string changes to tell what depletion timestep the input uses
+    what_timestep = ''
     mat_beg = False
     # comp_dict stores composition of different materials
     # key: isotope  /// value: fraction
@@ -44,6 +47,11 @@ def read_input_file(filename):
 
             elif 'dep' in line:
                 current_section = 'dep'
+                # depletion time interval type (daystep, daytot)
+                what_timestep = line.split()[1]
+
+            elif current_section == 'dep':
+                timestep = float(line)
 
             elif current_section == 'mat':
                 if line.split()[0] == 'rgb':
@@ -58,6 +66,8 @@ def read_input_file(filename):
         print(dense_dict[key])
         print(key)
         print(comp_dict[key])
+
+    print(timestep)
         
 def get_isotope_frac_list(line):
     """ Convert a line of material definition into
