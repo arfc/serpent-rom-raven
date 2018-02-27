@@ -1,6 +1,7 @@
 set title "MSBR, no Th,U-233 8.5E-11, after 400 days 7.75E-1"
 
-include "./test_IB_lat"
+include "/projects/sciteam/bahg/projects/raven/framework/CodeInterfaces/SERPENT/serpent-raven
+/test_IB_lat"
 
 % --- Fuel (LiF-BeF2-ThF4-233UF4-239PuF3 72-16-12-0.232-0.0006 mole %) Table 3.7 Robertson:
 mat fuel    -3.3304 burn 1 % g/cm3 for mixture
@@ -128,7 +129,7 @@ set powdens 6.666E-3    %22.2kW/l Robertson
 %set power 2250000000.0 % 2.25 GW(th)
 
 dep daystep % 3x100 + 33 steps
-30 % 30 days cycle
+0.3 % 30 days cycle
 
 
 %---- Print compositions of depleted materials after each step
