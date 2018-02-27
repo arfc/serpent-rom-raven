@@ -166,11 +166,9 @@ class Serpent(CodeInterfaceBase):
 
 
   def finalizeCodeOutput(self, command, output, workDir):
-    import output_parser
     filename = command.split()[1]
     print("FILENAME %s" %filename)
     print("OUTPUT %s" %output)
-    output = output.split('~')[1]
     print('NEW OUTPUT %s' %output)
     print('OP WILL RUN ON %s_res.m' %output)
     keff_dict = op.search_keff(output + '_res.m')
