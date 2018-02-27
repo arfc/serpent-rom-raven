@@ -6,8 +6,6 @@
     <Sequence>runGrid,outputResults</Sequence>
     <!-- number of parallel runs executed simultaneously -->
     <batchSize>2</batchSize>
-    <!-- prints a duplicated input to file -->
-    <printInput>duplicated_input.xml</printInput>
   </RunInfo>
 
   <Files>
@@ -23,6 +21,7 @@
   </Models>
 
   <Distributions>
+    <!-- uniform distribution from 0.1 to 1 -->
     <Uniform name="timedist">
       <lowerBound>0.1</lowerBound>
       <upperBound>1</upperBound>
@@ -41,6 +40,7 @@
 
   <Steps>
     <MultiRun name="runGrid">
+      <!-- runGrid runs serpent by the number of steps with sampled variable -->
       <Input   class="Files"       type=""          >originalInput</Input>
       <Model   class="Models"      type="Code"      >SERPENT</Model>
       <Sampler class="Samplers"    type="Grid"      >myGrid</Sampler>
