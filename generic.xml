@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<Simulation verbosity="all">
+  <RunInfo>
+    <WorkingDir>serpent-raven</WorkingDir>
+    <Sequence>runGrid,outputResults</Sequence>
+    <batchSize>4</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="originalInput" type="">publ_core.serpent</Input>
+  </Files>
+
+  <Models>
+    <Code name="serpent" subType="GenericCode">
+      <executable>/projects/sciteam/bahg/serpent/src/sss2 -omp 32 </executable>
+      <clargs arg="aprun -n 6 -d 32" type="prepend"/>
+      <clargs arg="" extension=".serpent" type="input"/>
+    </Code>
+  </Models>
+
+  <Distributions>
+    <Uniform name="decayDist">
+      <lowerBound>0.0</lowerBound>
+      <upperBound>1.0</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Grid name="myGrid">
+      <variable name="deptime">
+        <distribution>decayDist</distribution>
+        <grid construction="equal" steps="3" type="CDF">0.1 0.8</grid>
+      </variable>
+    </Grid>
+  </Samplers>
+
+  <Steps>
+    <MultiRun name="runGrid">
+      <Input   class="Files"       type=""          >originalInput</Input>
+      <Model   class="Models"      type="Code"      >serpent</Model>
+      <Sampler class="Samplers"    type="Grid"      >myGrid</Sampler>
+      <Output  class="DataObjects" type="PointSet"  >outPointSet</Output>
+    </MultiRun>
+    <IOStep name="outputResults">
+      <Input  class="DataObjects" type="PointSet"   >outPointSet</Input>
+      <Output  class="OutStreams"  type="Print"     >outPointSet_dump</Output>
+    </IOStep>
+  </Steps>
+
+  <OutStreams>
+    <Print name="outPointSet_dump">
+      <type>csv</type>
+      <source>outPointSet</source>
+    </Print>
+    <Print name="outPointSetAverage_dump">
+      <type>csv</type>
+      <source>outPointSetAverage</source>
+    </Print>
+    <Print name="outputHistories_dump">
+        <type>csv</type>
+        <source>outputHistories</source>
+    </Print>
+  </OutStreams>
+
+  <DataObjects>
+    <PointSet name="outPointSet">
+      <Input>deptime</Input>
+      <Output>A</Output>
+    </PointSet>
+  </DataObjects>
+
+</Simulation>

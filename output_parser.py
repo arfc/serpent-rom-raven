@@ -217,6 +217,7 @@ def csv_render_list_dict(csv_filename, list_dict):
 
         return True
 
+"""
 filename = './output/publ_core'
 # render csv for all bumat files generated (from 0 to x)
 
@@ -234,3 +235,4 @@ while True:
 
 keff_dict = search_keff('./output/publ_core_res.m')
 csv_render_list_dict('keff.csv', keff_dict)
+"""

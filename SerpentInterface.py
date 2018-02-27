@@ -1,5 +1,3 @@
-# Copyright 2017 Battelle Energy Alliance, LLC
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -24,6 +22,9 @@ import os
 import copy
 import GenericParser
 from CodeInterfaceBaseClass import CodeInterfaceBase
+import sys
+sys.path.append("/projects/sciteam/bahg/projects/raven/framework/CodeInterfaces/src")
+import output_parser as op
 
 class Serpent(CodeInterfaceBase):
   """
@@ -44,39 +45,97 @@ class Serpent(CodeInterfaceBase):
     """
     CodeInterfaceBase.__init__(self) # The base class doesn't actually implement this, but futureproofing.
     self.inputExtensions  = []       # list of extensions for RAVEN to edit as inputs
-    self.outputExtensions = ['bumat', 'res', 'out']       # list of extensions for RAVEN to gather data from?
-    self.execPrefix       = 'sss2'       # executioner command prefix (e.g., 'python ')
+    self.outputExtensions = []       # list of extensions for RAVEN to gather data from?
+    self.execPrefix       = ''       # executioner command prefix (e.g., 'python ')
     self.execPostfix      = ''       # executioner command postfix (e.g. -zcvf)
     self.caseName         = None     # base label for outgoing files, should default to inputFileName
-
-  def addDefaultExtension(self):
-    """
-      The Generic code interface does not accept any default input types.
-      @ In, None
-      @ Out, None
-    """
-    pass
 
   def generateCommand(self,inputFiles,executable,clargs=None, fargs=None):
     """
       See base class.  Collects all the clargs and the executable to produce the command-line call.
       Returns tuple of commands and base file name for run.
       Commands are a list of tuples, indicating parallel/serial and the execution command to use.
-      @ In, inputFiles, list, List of input files (length of the list depends on the number of inputs have been added in the Step is running this code)
+      @ In, inputFiles, list, List of input files (lenght of the list depends on the number of inputs have been added in the Step is running this code)
       @ In, executable, string, executable name with absolute path (e.g. /home/path_to_executable/code.exe)
       @ In, clargs, dict, optional, dictionary containing the command-line flags the user can specify in the input (e.g. under the node < Code >< clargstype =0 input0arg =0 i0extension =0 .inp0/ >< /Code >)
       @ In, fargs, dict, optional, a dictionary containing the axuiliary input file variables the user can specify in the input (e.g. under the node < Code >< clargstype =0 input0arg =0 aux0extension =0 .aux0/ >< /Code >)
       @ Out, returnCommand, tuple, tuple containing the generated command. returnCommand[0] is the command to run the code (string), returnCommand[1] is the name of the output root
     """
+    if clargs==None:
+      raise IOError('No input file was specified in clargs!')
+    #check for output either in clargs or fargs
+    #if len(fargs['output'])<1 and 'output' not in clargs.keys():
+    #  raise IOError('No output file was specified, either in clargs or fileargs!')
+    #check for duplicate extension use
+    usedExt=[]
+    for ext in list(clargs['input'][flag] for flag in clargs['input'].keys()) + list(fargs['input'][var] for var in fargs['input'].keys()):
+      if ext not in usedExt:
+        usedExt.append(ext)
+      else:
+        raise IOError('GenericCodeInterface cannot handle multiple input files with the same extension.  You may need to write your own interface.')
 
-    # There is only one input file for per SERPENT run
-    if isinstance(inputFiles, list):
-      inputFiles = inputFiles[0]
+    #check all required input files are there
+    inFiles=inputFiles[:]
+    for exts in list(clargs['input'][flag] for flag in clargs['input'].keys()) + list(fargs['input'][var] for var in fargs['input'].keys()):
+      for ext in exts:
+        found=False
+        for inf in inputFiles:
+          if '.'+inf.getExt() == ext:
+            found=True
+            inFiles.remove(inf)
+            break
+        if not found:
+          raise IOError('input extension "'+ext+'" listed in input but not in inputFiles!')
+    #TODO if any remaining, check them against valid inputs
 
-    # There is only one input file for SERPENT
-    run_command = '/home/dkadkf/sss2_src/sss2 ' + inputFiles
-    output_root = './output/'
-    returnCommand = (run_command, output_root)
+    #PROBLEM this is limited, since we can't figure out which .xml goes to -i and which to -d, for example.
+    def getFileWithExtension(fileList,ext):
+      """
+      Just a script to get the file with extension ext from the fileList.
+      @ In, fileList, the string list of filenames to pick from.
+      @ Out, ext, the string extension that the desired filename ends with.
+      """
+      found = False
+      for index,inputFile in enumerate(fileList):
+        if inputFile.getExt() == ext:
+          found=True
+          break
+      if not found:
+        raise IOError('No InputFile with extension '+ext+' found!')
+      return index,inputFile
+
+    #prepend
+    todo = ''
+    todo += clargs['pre']+' '
+    todo += executable
+    index=None
+    #inputs
+    for flag,exts in clargs['input'].items():
+      if flag == 'noarg':
+        for ext in exts:
+          idx,fname = getFileWithExtension(inputFiles,ext.strip('.'))
+          todo+=' '+fname.getFilename()
+          if index == None:
+            index = idx
+        continue
+      todo += ' '+flag
+      for ext in exts:
+        idx,fname = getFileWithExtension(inputFiles,ext.strip('.'))
+        todo+=' '+fname.getFilename()
+        if index == None:
+          index = idx
+    #outputs
+    #FIXME I think if you give multiple output flags this could result in overwriting
+    self.caseName = inputFiles[index].getBase()
+    outfile = 'out~'+self.caseName
+    if 'output' in clargs.keys():
+      todo+=' '+clargs['output']+' '+outfile
+    #text flags
+    todo+=' '+clargs['text']
+    #postpend
+    todo+=' '+clargs['post']
+    returnCommand = [('parallel',todo)],outfile
+    print('Execution Command: '+str(returnCommand[0]))
     return returnCommand
 
   def createNewInput(self,currentInputFiles,origInputFiles,samplerType,**Kwargs):
@@ -89,8 +148,6 @@ class Serpent(CodeInterfaceBase):
             where RAVEN stores the variables that got sampled (e.g. Kwargs['SampledVars'] => {'var1':10,'var2':40})
       @ Out, newInputFiles, list, list of newer input files, list of the new input files (modified and not)
     """
-
-    # check validity of input file.. how?
     indexes=[]
     infiles=[]
     origfiles=[]
@@ -107,10 +164,16 @@ class Serpent(CodeInterfaceBase):
     parser.writeNewInput(currentInputFiles,origfiles)
     return currentInputFiles
 
+
   def finalizeCodeOutput(self, command, output, workDir):
     import output_parser
     filename = command.split()[1]
-    keff_dict = search_keff(output + filename + '_res.m')
+    print("FILENAME %s" %filename)
+    print("OUTPUT %s" %output)
+    output = output.split('~')[1]
+    print('NEW OUTPUT %s' %output)
+    print('OP WILL RUN ON %s_res.m' %output)
+    keff_dict = op.search_keff(output + '_res.m')
     output_path = output + filename + '_keff.csv' 
-    csv_render_list_dict(output_path, keff_dict)
+    op.csv_render_list_dict(output_path, keff_dict)
     return output

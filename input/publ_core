@@ -71,9 +71,9 @@ therm gr 900 gr05.32t gr06.32t       % 900K C-12
 
 % --- Cross section data library file path:
 
-set acelib "/home/dkadkf/serpent/xsdata/sss_jeff32.xsdata"
+%set acelib "/home/dkadkf/serpent/xsdata/sss_jeff32.xsdata"
 %set acelib "/projects/arfc/serpent/core/xsdata/endfb7/sss_endfb7.xsdata" %this for RCaaS
-%set acelib "/projects/sciteam/bahg/serpent/xsdata/jeff32/sss_jeff32.xsdata" %this for BW
+set acelib "/projects/sciteam/bahg/serpent/xsdata/jeff312/sss_jeff312.xsdata" %this for BW
 
 
 % --- Periodic boundary condition:
@@ -105,12 +105,12 @@ set pop 10000 500 20
 %mesh 2 2000 2000
 
 % --- Decay and fission yield libraries:
-set declib "/home/dkadkf/serpent/xsdata/sss_jeff311.dec"
-set nfylib "/home/dkadkf/serpent/xsdata/sss_jeff311.nfy"
+%set declib "/home/dkadkf/serpent/xsdata/sss_jeff311.dec"
+%set nfylib "/home/dkadkf/serpent/xsdata/sss_jeff311.nfy"
 %set declib "/projects/arfc/serpent/core/xsdata/endfb7/sss_endfb7.dec" % for RCaaS
 %set nfylib "/projects/arfc/serpent/core/xsdata/endfb7/sss_endfb7.nfy" % for%RCaaS
-%set declib "/projects/sciteam/bahg/serpent/xsdata/jeff32/sss_jeff311.dec"       % for BW
-%set nfylib "/projects/sciteam/bahg/serpent/xsdata/jeff32/sss_jeff311.nfy"       % for BW
+set declib "/projects/sciteam/bahg/serpent/xsdata/jeff312/sss_jeff33.dec"       % for BW
+set nfylib "/projects/sciteam/bahg/serpent/xsdata/jeff312/sss_jeff33.nfy"       % for BW
 
 
 % --- Reduce energy grid size:

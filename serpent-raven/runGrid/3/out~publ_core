@@ -1,0 +1,165 @@
+
+  _                   .-=-.           .-=-.          .-==-.       
+ { }      __        .' O o '.       .' O o '.       /  -<' )--<   
+ { }    .' O'.     / o .-. O \     / o .-. O \     /  .---`       
+ { }   / .-. o\   /O  /   \  o\   /O  /   \  o\   /O /            
+  \ `-` /   \ O`-'o  /     \  O`-'o  /     \  O`-`o /             
+   `-.-`     '.____.'       `._____.'       `.____.'              
+
+Serpent 2 beta
+
+A Continuous-energy Monte Carlo Reactor Physics Burnup Calculation Code
+
+ - Version 2.1.29 (June 12, 2017) -- Contact: serpent@vtt.fi
+
+ - Reference: J. Leppanen, et al. "The Serpent Monte Carlo code: Status,
+              development and applications in 2013." Ann. Nucl. Energy,
+              82 (2015) 142-150.
+
+ - Compiled Nov 10 2017 16:43:54
+
+ - MPI Parallel calculation mode available
+
+ - OpenMP Parallel calculation mode available
+
+ - Geometry and mesh plotting available
+
+ - Default data path not set
+
+Begin calculation on Tue Feb 27 09:58:32 2018
+
+Reading input file "publ_core.serpent"...
+Reading input file "/projects/sciteam/bahg/projects/raven/framework/CodeInterfaces/SERPENT/serpent-raven/test_IB_lat"...
+
+Checking duplicate input definitions...
+OK.
+
+Dividing burnable materials...
+OK.
+
+Creating geometry...
+OK.
+
+Counting geometry zones...
+
+The geometry consists of 3 levels:
+
+Level 0 size: max 4 zones
+Level 1 size: max 4 zones
+Level 2 size: max 13 zones
+
+Processing cells...
+OK.
+
+Linking materials to geometry...
+OK.
+
+Counting cells...
+OK.
+
+Processing data for group constant generation:
+
+ - 70 energy groups in micro-group structure
+ - 4 energy groups in macro-group structure
+ - B1 fundamental mode calculation is not run
+ - Group constants generated in 1 universes
+ - Discontinuity factors are not calculated
+ - Pin-power distributions are not calculated
+ - Albedos are not calculated
+ - Poison cross sections are not calculated
+
+Reading ACE directory files...
+OK.
+
+Reading radioactive decay data files...
+
+***** Tue Feb 27 09:58:33 2018 (seed = 1519747112, MPI task = 0)
+Warning message from function ReadDecayFile:
+
+Sum of decay branching ratios is 0.450000 (ZAI = 771690)
+
+
+***** Tue Feb 27 09:58:33 2018 (seed = 1519747112, MPI task = 0)
+Warning message from function ReadDecayFile:
+
+Sum of decay branching ratios is 0.940000 (ZAI = 791730)
+
+
+***** Tue Feb 27 09:58:33 2018 (seed = 1519747112, MPI task = 0)
+Warning message from function ReadDecayFile:
+
+Sum of decay branching ratios is 0.910000 (ZAI = 1022510)
+
+
+***** Tue Feb 27 09:58:33 2018 (seed = 1519747112, MPI task = 0)
+Warning message from function ReadDecayFile:
+
+Sum of decay branching ratios is 0.850000 (ZAI = 1022570)
+
+OK.
+
+Reading neutron-induced fission yields...
+OK.
+
+Adding nuclides in material fuel...
+
+Nuclide   3007.09c -- lithium 7 at 900K (Li-7)
+Nuclide   3006.09c -- lithium 6 at 900K (Li-6)
+Nuclide   9019.09c -- fluorine 19 at 900K (F-19)
+Nuclide   4009.09c -- beryllium 9 at 900K (Be-9)
+Nuclide  90232.09c -- thorium 232 at 900K (Th-232)
+Nuclide  91233.09c -- protactinium 233 at 900K (Pa-233)
+Nuclide  92233.09c -- uranium 233 at 900K (U-233)
+Nuclide  94239.09c -- plutonium 239 at 900K (Pu-239)
+
+Adding nuclides in material moder...
+
+Nuclide   6000.09c -- natural carbon at 900K (C-nat)
+
+Adding activation products...
+
+Nuclide   1001.09c -- hydrogen at 900K (H-1)
+Nuclide   1002.09c -- deuterium at 900K (H-2)
+Nuclide   1003.09c -- tritium at 900K (H-3)
+Nuclide   2003.09c -- helium 3 at 900K (He-3)
+Nuclide   2004.09c -- helium 4 at 900K (He-4)
+Nuclide   7015.09c -- nitrogen 15 at 900K (N-15)
+Nuclide   7014.09c -- nitrogen 14 at 900K (N-14)
+Nuclide   5011.09c -- boron 11 at 900K (B-11)
+Nuclide   5010.09c -- boron 10 at 900K (B-10)
+Nuclide   8016.09c -- oxygen 16 at 900K (O-16)
+Nuclide   8017.09c -- oxygen 17 at 900K (O-17)
+
+Adding actinide data...
+
+Nuclide  90227.09c -- thorium 227 at 900K (Th-227)
+Nuclide  90228.09c -- thorium 228 at 900K (Th-228)
+Nuclide  90229.09c -- thorium 229 at 900K (Th-229)
+Nuclide  90230.09c -- thorium 230 at 900K (Th-230)
+Nuclide  90233.09c -- thorium 233 at 900K (Th-233)
+Nuclide  90234.09c -- thorium 234 at 900K (Th-234)
+Nuclide  91231.09c -- protactinium 231 at 900K (Pa-231)
+Nuclide  91232.09c -- protactinium 232 at 900K (Pa-232)
+Nuclide  92232.09c -- uranium 232 at 900K (U-232)
+Nuclide  92234.09c -- uranium 234 at 900K (U-234)
+Nuclide  92235.09c -- uranium 235 at 900K (U-235)
+Nuclide  92236.09c -- uranium 236 at 900K (U-236)
+Nuclide  92237.09c -- uranium 237 at 900K (U-237)
+Nuclide  92238.09c -- uranium 238 at 900K (U-238)
+Nuclide  93235.09c -- neptunium 235 at 900K (Np-235)
+Nuclide  93236.09c -- neptunium 236 at 900K (Np-236)
+Nuclide  93237.09c -- neptunium 237 at 900K (Np-237)
+Nuclide  93238.09c -- neptunium 238 at 900K (Np-238)
+Nuclide  93239.09c -- neptunium 239 at 900K (Np-239)
+Nuclide  94236.09c -- plutonium 236 at 900K (Pu-236)
+Nuclide  94237.09c -- plutonium 237 at 900K (Pu-237)
+Nuclide  94238.09c -- plutonium 238 at 900K (Pu-238)
+aprun: Apid 65281072: Caught signal Interrupt, sending to application
+_pmiu_daemon(SIGCHLD): [NID 27244] [c1-8c1s6n0] [Tue Feb 27 09:58:47 2018] PE RANK 2 exit signal Interrupt
+_pmiu_daemon(SIGCHLD): [NID 27245] [c1-8c1s6n1] [Tue Feb 27 09:58:47 2018] PE RANK 3 exit signal Interrupt
+_pmiu_daemon(SIGCHLD): [NID 27242] [c1-8c1s5n0] [Tue Feb 27 09:58:47 2018] PE RANK 4 exit signal Interrupt
+_pmiu_daemon(SIGCHLD): [NID 27247] [c1-8c1s7n1] [Tue Feb 27 09:58:47 2018] PE RANK 1 exit signal Interrupt
+_pmiu_daemon(SIGCHLD): [NID 27243] [c1-8c1s5n1] [Tue Feb 27 09:58:47 2018] PE RANK 5 exit signal Interrupt
+_pmiu_daemon(SIGCHLD): [NID 27246] [c1-8c1s7n0] [Tue Feb 27 09:58:47 2018] PE RANK 0 exit signal Interrupt
+Application 65281072 exit codes: 130
+Application 65281072 resources: utime ~93s, stime ~7s, Rss ~174216, inblocks ~873932, outblocks ~138741
