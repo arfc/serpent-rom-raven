@@ -1,6 +1,6 @@
 #!/bin/bash
-#PBS -l nodes=1:ppn=32:xe
-#PBS -l walltime=2:55:00
+#PBS -l nodes=32:ppn=32:xe
+#PBS -l walltime=10:00:00
 #PBS -N RAVEN
 #PBS -j oe   
 
@@ -14,5 +14,5 @@ cd $PBS_O_WORKDIR
 module swap PrgEnv-cray PrgEnv-gnu
 export OMP_NUM_THREADS=32
 
-aprun -n 1 -d 32 $ravenx generic.xml
+aprun -n 32 -d 32 $ravenx test_input.xml
 

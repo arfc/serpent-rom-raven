@@ -15,7 +15,7 @@
   <Models>
     <Code name="SERPENT" subType="Serpent">
       <executable>/projects/sciteam/bahg/serpent/src/sss2 -omp 32 </executable>
-      <clargs arg="aprun -n 6 -d 32 " type="prepend"/>
+      <clargs arg="aprun -n 32 -d 32 " type="prepend"/>
       <clargs arg="" extension=".serpent" type="input"/>
     </Code>
   </Models>
@@ -33,7 +33,7 @@
       <variable name="deptime">
         <distribution>timedist</distribution>
         <!-- equally spaced steps with lower and upper bound -->
-        <grid construction="equal" steps="2" type="CDF">0.1 1</grid>
+        <grid construction="equal" steps="50" type="CDF">0.1 1</grid>
       </variable>
     </Grid>
   </Samplers>
@@ -76,18 +76,18 @@
   <DataObjects>
     <PointSet name="outPointSet">
       <Input>deptime</Input>
-      <Output>A</Output>
+      <Output>keff</Output>
     </PointSet>
     <PointSet name="outPointSetAverage">
       <Input>deptime</Input>
-      <Output>A</Output>
+      <Output>keff</Output>
       <options>
         <operator>average</operator>
       </options>
     </PointSet>
     <HistorySet name="outputHistories">
       <Input>deptime</Input>
-      <Output>A</Output>
+      <Output>keff</Output>
     </HistorySet>
   </DataObjects>
 

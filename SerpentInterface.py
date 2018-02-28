@@ -166,12 +166,17 @@ class Serpent(CodeInterfaceBase):
 
 
   def finalizeCodeOutput(self, command, output, workDir):
-    filename = command.split()[1]
-    print("FILENAME %s" %filename)
-    print("OUTPUT %s" %output)
-    print('NEW OUTPUT %s' %output)
-    print('OP WILL RUN ON %s_res.m' %output)
-    keff_dict = op.search_keff(output + '_res.m')
-    output_path = output + filename + '_keff.csv' 
+    print('COMMAND: %s' %command)
+    print('OUTPUT: %s' %output)
+    # filename would be 'publ_core.serpent'
+    filename = command.strip().split(' ')[-1]
+    # filename_without_extension would be 'publ_core'
+    filename_without_extension = output.split('~')[1]
+    # resfile would be 'publ_core.serpent_res.m'
+    # this is the file produced by RAVEN
+    resfile = os.path.join(workDir, filename+"_res.m")
+    keff_dict = op.search_keff(resfile)
+    # output created has to be 'publ_core.serpent.csv'
+    output_path = os.path.join(workDir,output+'.csv')
+    print(output_path)
     op.csv_render_list_dict(output_path, keff_dict)
-    return output
