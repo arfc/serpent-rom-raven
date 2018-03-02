@@ -5,11 +5,10 @@
     <!-- ordered list of step names that RAVEN will run -->
     <Sequence>get_input,make_rom,dump_rom</Sequence>
     <!-- number of parallel runs executed simultaneously -->
-    <batchSize>2</batchSize>
+    <batchSize>6</batchSize>
   </RunInfo>
 
   <Files>
-    <Input name="csv_database" type="">publ_core.csv</Input>
     <Input name="rom_output"    type="">rom_output</Input>
   </Files>
 
@@ -17,8 +16,8 @@
     <!-- Defines ROM specifics, from library(subType),
          independent variable(Features), dependent variable(Target),
          algorithm (SKLtype) and etc. -->
-    <ROM name='keff_comp_rom' subType='SciKitLearn'>
-      <Features>deptime</Features>
+    <ROM name='msbr_rom' subType='SciKitLearn'>
+      <Features>core adensity after reproc</Features>
       <Target>keff</Target>
       <SKLtype>linear_model|LinearRegression</SKLtype>
       <fit_intercept>True</fit_intercept>
@@ -29,36 +28,30 @@
   <Steps>
     <IOStep name="get_input">
       <!-- In the IOStep the serpent-output-converted-csv files are logged into output-->
-      <Input  class="DataObjects" type="PointSet"   >outPointSet</Input>
-      <Output  class="OutStreams"  type="Print"     >outPointSet_dump</Output>
+      <Input  class="Databases" type="HDF5"   >db</Input>
+      <Output  class="DataObjects"  type="PointSet"     >db_object</Output>
     </IOStep>
     <RomTrainer name='make_rom'>
       <!-- Given the dataset, generate ROM using Scikit-learn -->
-      <Input class='DataObjects'   type='PointSet'  >outPointSet</Input>
-      <Output class='Models'     type='ROM'         >keff_comp_rom</Output>
+      <Input class='DataObjects'   type='PointSet'  >db_object</Input>
+      <Output class='Models'     type='ROM'         >msbr_rom</Output>
     </RomTrainer>
     <IOStep name='rom_dump'>
       <!-- Save the rom as rom_output-->
-      <Input class='Models'      type='ROM'         >keff_comp_rom</Input>
+      <Input class='Models'      type='ROM'         >msbr_rom</Input>
       <Output class='Files'      type=''            >rom_output</Output>
     </IOStep>
   </Steps>
 
-  <OutStreams>
-    <!-- Dumps the rows from serpent-output-converted-csv file -->
-    <Print name="outPointSet_dump">
-      <type>csv</type>
-      <source>outPointSet</source>
-    </Print>
-  </OutStreams>
-
-
+  <Databases>
+    <HDF5 name="db" filename="db_saltproc.hdf5" readMode='read' directory='./'/>
+  </Databases>
 
   <DataObjects>
     <!-- Specifies the output objects, just the rows from the
          serpent-output-converted-csv file with column name -->
     <PointSet name="outPointSet">
-      <Input>deptime</Input>
+      <Input>core adensity after reproc</Input>
       <Output>keff</Output>
     </PointSet>
   </DataObjects>
