@@ -3,14 +3,13 @@
   <RunInfo>
     <WorkingDir>serpent-raven</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
-    <Sequence>get_input,make_dep_rom, make_crit_rom, crit_rom_dump, dep_rom_dump</Sequence>
+    <Sequence>get_input, make_crit_rom, crit_rom_dump</Sequence>
     <!-- number of parallel runs executed simultaneously -->
     <batchSize>6</batchSize>
   </RunInfo>
 
   <Files>
     <Input name="crit_rom_output"    type="">crit_rom_output</Input>
-    <Input name="dep_rom_output"    type="">dep_rom_output</Input>
   </Files>
 
   <Models>
@@ -26,45 +25,21 @@
     </ROM>
   </Models>
 
-
-  <Models>
-    <!-- Defines ROM specifics, from library(subType),
-         independent variable(Features), dependent variable(Target),
-         algorithm (SKLtype) and etc. -->
-    <ROM name='dep_rom' subType='SciKitLearn'>
-      <Features>fresh_comp</Features>
-      <Target>dep_comp</Target>
-      <SKLtype>linear_model|LinearRegression</SKLtype>
-      <fit_intercept>True</fit_intercept>
-      <normalize>False</normalize>
-    </ROM>
-  </Models>
-
   <Steps>
     <IOStep name="get_input">
       <!-- In the IOStep the serpent-output-converted-csv files are logged into output-->
       <Input  class="Databases" type="HDF5"   >db</Input>
       <Output  class="DataObjects"  type="PointSet"     >db_object</Output>
     </IOStep>
-    <RomTrainer name='make_dep_rom'>
-      <!-- Given the dataset, generate ROM using Scikit-learn -->
-      <Input class='DataObjects'   type='PointSet'  >db_object</Input>
-      <Output class='Models'     type='ROM'         >crit_rom</Output>
-    </RomTrainer>
     <RomTrainer name='make_crit_rom'>
       <!-- Given the dataset, generate ROM using Scikit-learn -->
       <Input class='DataObjects'   type='PointSet'  >db_object</Input>
       <Output class='Models'     type='ROM'         >dep_rom</Output>
     </RomTrainer>
-    <IOStep name='rom_dump'>
+    <IOStep name='crit_rom_dump'>
       <!-- Save the rom as rom_output-->
       <Input class='Models'      type='ROM'         >crit_rom</Input>
       <Output class='Files'      type=''            >crit_rom_output</Output>
-    </IOStep>
-    <IOStep name='rom_dump'>
-      <!-- Save the rom as rom_output-->
-      <Input class='Models'      type='ROM'         >dep_rom</Input>
-      <Output class='Files'      type=''            >dep_rom_output</Output>
     </IOStep>
   </Steps>
 
