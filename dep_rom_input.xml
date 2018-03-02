@@ -34,7 +34,7 @@
     <RomTrainer name='make_dep_rom'>
       <!-- Given the dataset, generate ROM using Scikit-learn -->
       <Input class='DataObjects'   type='PointSet'  >db_object</Input>
-      <Output class='Models'     type='ROM'         >crit_rom</Output>
+      <Output class='Models'     type='ROM'         >dep_rom</Output>
     </RomTrainer>
     <IOStep name='dep_rom_dump'>
       <!-- Save the rom as rom_output-->
@@ -44,7 +44,7 @@
   </Steps>
 
   <Databases>
-    <HDF5 name="db" filename="db_saltproc.hdf5" readMode='read' directory='./'/>
+    <HDF5 name="db" filename="db_modified.hdf5" readMode='read' directory='./'/>
   </Databases>
 
   <DataObjects>

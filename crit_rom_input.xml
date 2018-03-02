@@ -3,13 +3,14 @@
   <RunInfo>
     <WorkingDir>serpent-raven</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
-    <Sequence>get_input, make_crit_rom, crit_rom_dump</Sequence>
+    <Sequence>get_input, htoc, make_crit_rom, crit_rom_dump</Sequence>
     <!-- number of parallel runs executed simultaneously -->
     <batchSize>6</batchSize>
   </RunInfo>
 
   <Files>
     <Input name="crit_rom_output"    type="">crit_rom_output</Input>
+    <Input name="db_output"    type="">db_output</Input>
   </Files>
 
   <Models>
@@ -29,12 +30,17 @@
     <IOStep name="get_input">
       <!-- In the IOStep the serpent-output-converted-csv files are logged into output-->
       <Input  class="Databases" type="HDF5"   >db</Input>
-      <Output  class="DataObjects"  type="PointSet"     >db_object</Output>
+      <Output  class="DataObjects"  type="HistorySet"     >db_object</Output>
+    </IOStep>
+    <IOStep name='htoc'>
+      <!-- Save the rom as rom_output-->
+      <Input class='DataObjects'      type='HistorySet'       >db_object</Input>
+      <Output class='Databases'      type='HDF5'            >db_output</Output>
     </IOStep>
     <RomTrainer name='make_crit_rom'>
       <!-- Given the dataset, generate ROM using Scikit-learn -->
-      <Input class='DataObjects'   type='PointSet'  >db_object</Input>
-      <Output class='Models'     type='ROM'         >dep_rom</Output>
+      <Input class='DataObjects'   type='HistorySet'  >db_object</Input>
+      <Output class='Models'     type='ROM'         >crit_rom</Output>
     </RomTrainer>
     <IOStep name='crit_rom_dump'>
       <!-- Save the rom as rom_output-->
@@ -44,16 +50,17 @@
   </Steps>
 
   <Databases>
-    <HDF5 name="db" filename="db_saltproc.hdf5" readMode='read' directory='./'/>
+    <HDF5 name="db" filename="db_modified.hdf5" readMode='read' />
+    <HDF5 name="db_output" filename="db_output.hdf5" readMode='overwrite'/>
   </Databases>
 
   <DataObjects>
     <!-- Specifies the output objects, just the rows from the
          serpent-output-converted-csv file with column name -->
-    <PointSet name="outPointSet">
+    <HistorySet name="db_object">
       <Input>fresh_comp</Input>
       <Output>keff</Output>
-    </PointSet>
+    </HistorySet>
   </DataObjects>
 
 </Simulation>
