@@ -12,7 +12,9 @@ cd $PBS_O_WORKDIR
 
 # To add certain modules that you do not have added via ~/.modules
 module swap PrgEnv-cray PrgEnv-gnu
+module load bwpy
+module load bwpy-mpi
 export OMP_NUM_THREADS=32
 
-aprun -n 32 -d 32 $ravenx test_input.xml
+aprun -n 32 -d 32 bwpy-environ $ravenpy job_test_input.xml
 

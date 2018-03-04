@@ -18,7 +18,7 @@
         clargs add to the command run (e.g. prepend -add in front of command)-->
     <Code name="SERPENT" subType="Serpent">
       <executable>/projects/sciteam/bahg/serpent/src/sss2 -omp 32 </executable>
-      <clargs arg="aprun -n 10 -d 32 " type="prepend"/>
+      <clargs arg="aprun -n 9 -d 32 " type="prepend"/>
       <clargs arg="" extension=".serpent" type="input"/>
     </Code>
   </Models>
@@ -28,7 +28,7 @@
          uniform distribution from 0.1 to 1 -->
     <Uniform name="timedist">
       <lowerBound>0.0</lowerBound>
-      <upperBound>30</upperBound>
+      <upperBound>100</upperBound>
     </Uniform>
   </Distributions>
 
@@ -89,8 +89,6 @@
       <source>outPointSet</source>
     </Print>
   </OutStreams>
-
-
 
   <DataObjects>
     <!-- Specifies the output objects, just the rows from the

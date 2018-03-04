@@ -176,7 +176,8 @@ class Serpent(CodeInterfaceBase):
     bumatfile = os.path.join(workDir, filename+".bumat1")
 
     # get the list of isotopes to track
-    iso_list = op.read_file_into_list('./iso_file')
+    isofile = os.path.join('/projects/sciteam/bahg/projects/raven/framework/CodeInterfaces/SERPENT/iso_file')
+    iso_list = op.read_file_into_list(isofile)
     # parse files into dictionary
     keff_dict = op.search_keff(resfile)
     # the second argument is the percent cutoff 
