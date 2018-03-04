@@ -166,8 +166,6 @@ class Serpent(CodeInterfaceBase):
 
 
   def finalizeCodeOutput(self, command, output, workDir):
-    print('COMMAND: %s' %command)
-    print('OUTPUT: %s' %output)
     # filename would be 'publ_core.serpent'
     filename = command.strip().split(' ')[-1]
     # filename_without_extension would be 'publ_core'
@@ -175,8 +173,14 @@ class Serpent(CodeInterfaceBase):
     # resfile would be 'publ_core.serpent_res.m'
     # this is the file produced by RAVEN
     resfile = os.path.join(workDir, filename+"_res.m")
+    bumatfile = os.path.join(workDir, filename+".bumat1")
+
+    # get the list of isotopes to track
+    iso_list = op.read_file_into_list('./iso_file')
+    # parse files into dictionary
     keff_dict = op.search_keff(resfile)
-    # output created has to be 'publ_core.serpent.csv'
-    output_path = os.path.join(workDir,output+'.csv')
-    print(output_path)
-    op.csv_render_list_dict(output_path, keff_dict)
+    # the second argument is the percent cutoff 
+    bumat_dict = op.bumat_read(bumatfile, 0.01)
+
+    output_path = os.path.join(workDir, output+'.csv')
+    op.make_csv(output_path, bumat_dict, keff_dict, iso_list)
