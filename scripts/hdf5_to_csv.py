@@ -1,12 +1,16 @@
 import h5py
 import numpy as np
 import csv
-
+import os
 
 # this bit converts andrei's hdf5 to more relevant format
 
 saltproc_file = '../serpent-raven/db_saltproc.hdf5'
 f = h5py.File(saltproc_file, 'r')
+try:
+    os.remove('../serpent-raven/db_modified.hdf5')
+except:
+    print('no db modified')
 modified_hdf5 = h5py.File('../serpent-raven/db_modified.hdf5', 'w')
 
 
@@ -22,6 +26,16 @@ keff = f['keff_BOC'][0]
 
 iso_codes = f['iso_codes'][:]
 iso_codes = [x.decode('utf-8').split('.')[0] for x in iso_codes]
+
+# put duplicate indeces in no-do list:
+no_do_list = []
+for iso in iso_codes:
+    indeces = [i for i, x in enumerate(iso_codes) if x == iso]
+    if len(indeces) != 1:
+        for index in indeces[1:]:
+            no_do_list.append(index)
+            print(index)
+no_do_list = list(set(no_do_list))
 
 # move the depleted fuel one before to match fresh and depleted composition
 modified_hdf5.create_dataset('dep_comp', data=dep_comp)
@@ -44,8 +58,15 @@ f = h5py.File(filename, 'r')
 
 # dep_comp[0] would be 1158 isotopes for the first depletion
 dep_comp = f['dep_comp']
-print(type(dep_comp))
 fresh_comp = f['fresh_comp']
+
+# delete duplicate isotopes
+for i in range(len(keff)):
+    for index in no_do_list:
+        np.delete(dep_comp[i], index)
+        np.delete(fresh_comp[i], index)
+        np.delete(iso_codes, index)
+
 # keff[0] is the keff value of dep_comp[0]
 keff = f['keff']
 deptime = [3] * len(keff)
@@ -63,11 +84,8 @@ with open(outfile, 'w') as csv_file:
         row_list = np.append(row_list, dep_comp[[i]])
         #row_list = fresh_comp[i] + [keff[i], deptime[i]] + dep_comp[i]
         if i == 0:
-            print(fresh_comp[i])
-            print(keff[i])
-            print(deptime[i])
-            print(dep_comp[i])
-            print(row_list)
+            print(len(row_list))
+            print(len(header_list))
         writer.writerow(row_list)
 
 
