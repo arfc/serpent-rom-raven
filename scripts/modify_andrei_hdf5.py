@@ -1,9 +1,9 @@
 import h5py
 import numpy as np
 
-filename = 'db_saltproc.hdf5'
+filename = '../serpent-raven/db_saltproc.hdf5'
 f = h5py.File(filename, 'r')
-out = h5py.File('db_modified.hdf5', 'w')
+out = h5py.File('../serpent-raven/db_modified.hdf5', 'w')
 
 
 # core adensity before reproc is the depleted composition
