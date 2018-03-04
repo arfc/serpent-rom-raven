@@ -34,7 +34,6 @@ for iso in iso_codes:
     if len(indeces) != 1:
         for index in indeces[1:]:
             no_do_list.append(index)
-            print(index)
 no_do_list = list(set(no_do_list))
 
 # move the depleted fuel one before to match fresh and depleted composition
@@ -60,12 +59,19 @@ f = h5py.File(filename, 'r')
 dep_comp = f['dep_comp']
 fresh_comp = f['fresh_comp']
 
+dep_comp_filtered = np.empty(len(dep_comp[0]) - len(no_do_list))
+fresh_comp_filtered = np.empty(len(dep_comp[0]) - len(no_do_list))
+iso_codes_filtered = np.empty(len(dep_comp[0]) - len(no_do_list))
 # delete duplicate isotopes
 for i in range(len(keff)):
-    for index in no_do_list:
-        np.delete(dep_comp[i], index)
-        np.delete(fresh_comp[i], index)
-        np.delete(iso_codes, index)
+    dep_comp_filtered = np.vstack((dep_comp_filtered,
+                                  np.delete(dep_comp[i], no_do_list)))
+    fresh_comp_filtered = np.vstack((fresh_comp_filtered,
+                                    np.delete(fresh_comp[i], no_do_list)))
+iso_codes_filtered = np.delete(iso_codes, no_do_list)
+
+print(len(dep_comp_filtered[0]))
+
 
 # keff[0] is the keff value of dep_comp[0]
 keff = f['keff']
@@ -73,15 +79,15 @@ deptime = [3] * len(keff)
 
 with open(outfile, 'w') as csv_file:
     writer = csv.writer(csv_file)
-    fresh = ['f' + str(x) for x in iso_codes]
-    dep = ['d' + str(x) for x in iso_codes]
+    fresh = ['f' + str(x) for x in iso_codes_filtered]
+    dep = ['d' + str(x) for x in iso_codes_filtered]
     header_list = fresh + ['keff', 'deptime'] + dep
     # header is inputisotopes - keff - deptime - depisotopes
     writer.writerow(header_list)
     for i in range(len(keff)):
-        row_list = np.append(fresh_comp[i], keff[i])
+        row_list = np.append(fresh_comp_filtered[i], keff[i])
         row_list = np.append(row_list, deptime[i])
-        row_list = np.append(row_list, dep_comp[[i]])
+        row_list = np.append(row_list, dep_comp_filtered[[i]])
         #row_list = fresh_comp[i] + [keff[i], deptime[i]] + dep_comp[i]
         if i == 0:
             print(len(row_list))
