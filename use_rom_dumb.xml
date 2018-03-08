@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<Simulation verbosity="all">
+  <RunInfo>
+    <WorkingDir>rom</WorkingDir>
+    <!-- ordered list of step names that RAVEN will run -->
+    <Sequence>loadrom, runrom, outputresults</Sequence>
+    <!-- number of parallel runs executed simultaneously -->
+    <batchSize>2</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="rom" type="">rom</Input>
+  </Files>
+
+
+  <Distributions>
+      <Uniform name="uniform">
+          <upperBound>30</upperBound>
+          <lowerBound>10</lowerBound>
+      </Uniform>
+  </Distributions>
+    
+
+  <Samplers>
+      <Grid name="grid">
+          <variable name="deptime" >
+              <distribution>uniform</distribution>
+              <grid type="CDF" lowerBound="0.0" construction="equal" steps="2">0.0 1.0</grid>
+          </variable>
+      </Grid>
+  </Samplers>
+
+  <Models>
+    <ROM name="loadedrom" subType="SciKitLearn">
+      <Features>deptime</Features>
+      <Target>keff</Target>
+      <SKLtype>linear_model|LinearRegression</SKLtype>
+      <fit_intercept>True</fit_intercept>
+      <normalize>False</normalize>
+    </ROM>
+  </Models>
+
+  <Steps>
+
+    <IOStep name="loadrom">
+      <Input  class="Files" type=""   >rom</Input>
+      <Output  class="Models"  type="ROM"     >loadedrom</Output>
+    </IOStep>
+
+    <MultiRun name="runrom">
+      <Input class='DataObjects' type='PointSet'>input_data</Input>
+      <Model class='Models' type='ROM'>loadedrom</Model>
+      <Sampler class="Samplers" type="Grid"> grid</Sampler>
+      <Output class='DataObjects' type='PointSet'>results</Output>
+    </MultiRun>
+
+    <IOStep name="outputresults">
+      <Input  class="DataObjects" type="PointSet"   >results</Input>
+      <Output  class="OutStreams"  type="Print"     >results_dump</Output>
+    </IOStep>
+
+  </Steps>
+
+  <OutStreams>
+    <Print name="results_dump">
+      <type>csv</type>
+      <source>results</source>
+    </Print>
+  </OutStreams>
+
+  <DataObjects>
+    <PointSet name="input_data">
+      <Input>deptime</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+
+    <PointSet name="results">
+      <Input>deptime</Input>
+      <Output>keff</Output>
+    </PointSet>
+
+  </DataObjects>
+
+</Simulation>
