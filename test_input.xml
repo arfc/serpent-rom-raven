@@ -39,7 +39,7 @@
       <variable name="deptime">
         <distribution>timedist</distribution>
         <!-- equally spaced steps with lower and upper bound -->
-        <grid construction="equal" steps="2" type="CDF">0.1 1</grid>
+        <grid construction="equal" steps="5" type="CDF">0.1 1</grid>
       </variable>
     </Grid>
   </Samplers>
@@ -67,8 +67,8 @@
 
   <DataObjects>
     <PointSet name="outPointSet">
-      <Input>deptime</Input>
-      <Output>keff</Output>
+      <Input>feature_space</Input>
+      <Output>taget_space</Output>
     </PointSet>
   </DataObjects>
 

@@ -183,8 +183,8 @@ class Serpent(CodeInterfaceBase):
     # parse files into dictionary
     keff_dict = op.search_keff(resfile)
     # the second argument is the percent cutoff 
-    in_bumat_dict = op.bumat_read(inbumatfile, 0.01)
-    out_bumat_dict = op.bumat_read(outbumatfile, 0.01)
+    in_bumat_dict = op.bumat_read(inbumatfile, 1e-7)
+    out_bumat_dict = op.bumat_read(outbumatfile, 1e-7)
 
     output_path = os.path.join(workDir, output+'.csv')
     op.make_csv(output_path, in_bumat_dict, out_bumat_dict,
