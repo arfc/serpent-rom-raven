@@ -90,7 +90,7 @@ def bumat_read(bumat_file, percent_cutoff):
     for i in range(1, len(comp_lines)):
         parsed = parse_line(comp_lines[i])
         # isotope as key, atomic density as value
-        comp_dict[parsed[0].split('.')[0]] = parsed[1]
+        comp_dict[parsed[0]] = parsed[1]
 
     comp_dict = filter_trace(comp_dict, percent_cutoff)
     return comp_dict

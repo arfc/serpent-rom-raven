@@ -1178,7 +1178,6 @@ for line in comp_string.splitlines():
     line = line.split('%')[0]
     print(line)
     iso = line.split(' ')[0]
-    iso = iso.split('.')[0]
     frac = line.split('  ')[1]
     iso_list.append('f' + iso)
     frac_list.append(frac)
