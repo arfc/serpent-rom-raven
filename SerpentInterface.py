@@ -173,15 +173,19 @@ class Serpent(CodeInterfaceBase):
     # resfile would be 'publ_core.serpent_res.m'
     # this is the file produced by RAVEN
     resfile = os.path.join(workDir, filename+"_res.m")
-    bumatfile = os.path.join(workDir, filename+".bumat1")
+    input_file = os.path.join(workDir, filename)
+    inbumatfile = os.path.join(workDir, filename+".bumat0")
+    outbumatfile = os.path.join(workDir, filename+".bumat1")
     # get the list of isotopes to track
     script_loc = os.path.dirname(os.path.realpath(sys.argv[0]))
-    isofile = os.path.join(script_loc, 'iso_file')
+    isofile = os.path.join(script_loc, 'CodeInterfaces/SERPENT/iso_file')
     iso_list = op.read_file_into_list(isofile)
     # parse files into dictionary
     keff_dict = op.search_keff(resfile)
     # the second argument is the percent cutoff 
-    bumat_dict = op.bumat_read(bumatfile, 0.01)
+    in_bumat_dict = op.bumat_read(inbumatfile, 0.01)
+    out_bumat_dict = op.bumat_read(outbumatfile, 0.01)
 
     output_path = os.path.join(workDir, output+'.csv')
-    op.make_csv(output_path, bumat_dict, keff_dict, iso_list)
+    op.make_csv(output_path, in_bumat_dict, out_bumat_dict,
+                keff_dict, iso_list, input_file)
