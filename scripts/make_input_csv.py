@@ -1186,6 +1186,9 @@ for line in comp_string.splitlines():
 iso_list.append('deptime')
 frac_list.append('3')
 
+iso_list.append('OutputPlaceHolder')
+frac_list.append('0')
+
 outfile = '../rom/input.csv'
 
 with open(outfile, 'w') as csv_file:
