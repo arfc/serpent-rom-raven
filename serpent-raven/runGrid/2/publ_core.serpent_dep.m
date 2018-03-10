@@ -14,11 +14,11 @@ iTOT     = 2;
 
 MAT_fuel_VOLUME = [ 1.95057E+07 1.95057E+07 ];
 
-MAT_fuel_BURNUP = [ 0.00000E+00 3.66863E-01 ];
+MAT_fuel_BURNUP = [ 0.00000E+00 1.86767E-01 ];
 
 MAT_fuel_ADENS = [
 0.00000E+00 0.00000E+00 % lost data
-7.93476E-02 7.93492E-02 % total
+7.93476E-02 7.93484E-02 % total
 ];
 
 MAT_fuel_MDENS = [
@@ -28,41 +28,41 @@ MAT_fuel_MDENS = [
 
 MAT_fuel_A = [
 0.00000E+00 0.00000E+00 % lost data
-1.96425E+14 3.95176E+19 % total
+1.96425E+14 3.73320E+19 % total
 ];
 
 MAT_fuel_H = [
 0.00000E+00 0.00000E+00 % lost data
-1.54617E+02 1.05173E+07 % total
+1.54617E+02 1.03675E+07 % total
 ];
 
 MAT_fuel_SF = [
 0.00000E+00 0.00000E+00 % lost data
-2.64620E+00 2.37817E+03 % total
+2.64620E+00 1.24409E+03 % total
 ];
 
 MAT_fuel_GSRC = [
 0.00000E+00 0.00000E+00 % lost data
-1.66016E+13 3.94163E+19 % total
+1.66016E+13 3.69401E+19 % total
 ];
 
 MAT_fuel_ING_TOX = [
 0.00000E+00 0.00000E+00 % lost data
-1.01048E+07 6.57895E+11 % total
+1.01048E+07 6.51092E+11 % total
 ];
 
 MAT_fuel_INH_TOX = [
 0.00000E+00 0.00000E+00 % lost data
-1.93417E+09 6.65458E+11 % total
+1.93417E+09 6.46419E+11 % total
 ];
 
 TOT_VOLUME = [ 1.95057E+07 1.95057E+07 ];
 
-TOT_BURNUP = [ 0.00000E+00 3.66863E-01 ];
+TOT_BURNUP = [ 0.00000E+00 1.86767E-01 ];
 
 TOT_ADENS = [
 0.00000E+00 0.00000E+00 % lost data
-7.93476E-02 7.93492E-02 % total
+7.93476E-02 7.93484E-02 % total
 ];
 
 TOT_MASS = [
@@ -72,34 +72,34 @@ TOT_MASS = [
 
 TOT_A = [
 0.00000E+00 0.00000E+00 % lost data
-1.96425E+14 3.95176E+19 % total
+1.96425E+14 3.73320E+19 % total
 ];
 
 TOT_H = [
 0.00000E+00 0.00000E+00 % lost data
-1.54617E+02 1.05173E+07 % total
+1.54617E+02 1.03675E+07 % total
 ];
 
 TOT_SF = [
 0.00000E+00 0.00000E+00 % lost data
-2.64620E+00 2.37817E+03 % total
+2.64620E+00 1.24409E+03 % total
 ];
 
 TOT_GSRC = [
 0.00000E+00 0.00000E+00 % lost data
-1.66016E+13 3.94163E+19 % total
+1.66016E+13 3.69401E+19 % total
 ];
 
 TOT_ING_TOX = [
 0.00000E+00 0.00000E+00 % lost data
-1.01048E+07 6.57895E+11 % total
+1.01048E+07 6.51092E+11 % total
 ];
 
 TOT_INH_TOX = [
 0.00000E+00 0.00000E+00 % lost data
-1.93417E+09 6.65458E+11 % total
+1.93417E+09 6.46419E+11 % total
 ];
 
-BU = [ 0.00000E+00 3.66630E-01 ];
+BU = [ 0.00000E+00 1.86648E-01 ];
 
-DAYS = [ 0.00000E+00 5.50000E+01 ];
+DAYS = [ 0.00000E+00 2.80000E+01 ];
