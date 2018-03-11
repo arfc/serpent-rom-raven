@@ -142,11 +142,52 @@ a user can choose a variable (depletion time, U-233 Composition, etc.)
 and have RAVEN choose its value by sampling from a distribution. 
 In a RAVEN run, RAVEN will run multiple runs of SERPENT, save the 
 data in csv, dump all the outputs of SERPENT in a separate directory.
-An example of this is shown in: 
+An example of this is shown in \textbf{msbr_time.xml}.
+
+\subsubsection{Example of Running SERPENT with RAVEN for Varying Input Composition}
+In the Robertson paper \cite{robertson_conceptual_1971}, the
+input compositions are given a range. All other isotope
+compositions remain, constant, while the U233
+mole\% ranges from 0.2\% to 0.3\%. With the U233 change,
+Li-7 composition changes to make up
+for the difference ( 71.7 - 71.8\%) .
+These values are converted  to mass fraction
+for SERPENT input and better explained in a table in table \ref{tab:comp}.
+%%% CHECK AGAIN
+\begin{center}
+\begin{tabular}{ c c }
+    \hline
+    Isotopes & Mass Fraction \\
+    \hline
+    Li-6 & 3.24e-4 \\
+    F-19 & 45.41 \\
+    Be-9 & 2.5 \\ 
+    Th-232 & 43.59 \\
+    U-233 & 0.73 - 1.09 \\
+    Li-7 & 7.63 - 8\\
+    \hline
+\end{tabular}
+\label{tab:comp}
+\end{center}
+\end{table}
+
+This distribution is run where the U-233 composition was
+sampled in the range uniformly in 40 steps 
+(\textbf{linspace(0.73, 1.09, 40)}). The Li-7 composition
+is given by the remainder mass fraction 
+(eg. 100 - 3.24e-4 -45.41 - 2.5 - 43.59 - 0.73).
+Along with the composition variation,
+the depletion time is varied from 0 to 30 days, also
+in 40 steps to take into account
+different initial reprocessing frequencies.
+This creates an input grid of 40X40 = 1600 inputs to
+train the ROM in.
 
 
 \section*{Thrust 2. Generate \gls{ROM} of SERPENT}
-
+Data from both Andrei's saltproc run and RAVEN-run SERPENT
+input is put together into one csv (\textbf{serpent_run_data.csv}), and is used to train the ROM. The ROM generation input file
+is \textbf{generate_rom_from_csv.xml}. 
 
 \section*{Thrust 3. Validate \gls{ROM} calculation with SERPENT runs}
 
