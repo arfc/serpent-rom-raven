@@ -25,7 +25,7 @@ fresh_comp = f['core adensity after reproc'][:-1]
 keff = f['keff_BOC'][0]
 
 iso_codes = f['iso_codes'][:]
-iso_codes = [x.decode('utf-8').split('.')[0] for x in iso_codes]
+iso_codes = [x.decode('utf-8') for x in iso_codes]
 
 # put duplicate indeces in no-do list:
 no_do_list = []
