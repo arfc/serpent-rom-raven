@@ -142,7 +142,7 @@ a user can choose a variable (depletion time, U-233 Composition, etc.)
 and have RAVEN choose its value by sampling from a distribution. 
 In a RAVEN run, RAVEN will run multiple runs of SERPENT, save the 
 data in csv, dump all the outputs of SERPENT in a separate directory.
-An example of this is shown in \textbf{msbr_time.xml}.
+An example of this is shown in \textbf{msbr\_time.xml}.
 
 \subsubsection{Example of Running SERPENT with RAVEN for Varying Input Composition}
 In the Robertson paper \cite{robertson_conceptual_1971}, the
@@ -154,6 +154,7 @@ for the difference ( 71.7 - 71.8\%) .
 These values are converted  to mass fraction
 for SERPENT input and better explained in a table in table \ref{tab:comp}.
 %%% CHECK AGAIN
+\begin{table}
 \begin{center}
 \begin{tabular}{ c c }
     \hline
@@ -183,11 +184,26 @@ different initial reprocessing frequencies.
 This creates an input grid of 40X40 = 1600 inputs to
 train the ROM in.
 
+Currently the datasets available are listed in table \ref{tab:data}.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ c c c}
+    \hline
+    Available Datasets & Details & Number of SERPENT Runs \\
+    \hline
+    Andrei's Saltproc run & Mixed, reprocessed input composition & 290 \\
+    Startup fuel variation & from Robertson \cite{robertson_conceptual_1971}, range of input & 1600 = $40_{Composition} * 40_{Deptime}$ \\
+    \hline
+\end{tabular}
+\label{tab:data}
+\end{center}
+\end{table}
 
 \section*{Thrust 2. Generate \gls{ROM} of SERPENT}
 Data from both Andrei's saltproc run and RAVEN-run SERPENT
-input is put together into one csv (\textbf{serpent_run_data.csv}), and is used to train the ROM. The ROM generation input file
-is \textbf{generate_rom_from_csv.xml}. 
+input is put together into one csv (\textbf{serpent\_run\_data.csv}), and is used to train the ROM. The ROM generation input file
+is \textbf{generate\_rom\_from\_csv.xml}. 
 
 \section*{Thrust 3. Validate \gls{ROM} calculation with SERPENT runs}
 
