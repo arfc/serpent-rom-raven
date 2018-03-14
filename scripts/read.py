@@ -1,6 +1,7 @@
 import h5py
 import numpy as np
 import csv
+import sys
 
 def read_hdf5(filename):
     f = h5py.File(filename, 'r')
@@ -9,8 +10,7 @@ def read_hdf5(filename):
         print(key)
         print(f[key])
 
-def read_csv():
-    filename = '../rom/results_dump.csv'
+def read_csv(filename):
     with open(filename, mode='r') as input_file:
         for i, line in enumerate(input_file):
             if i == 0:
@@ -18,6 +18,7 @@ def read_csv():
             if i == 1:
                 value = line.split(',')
     for i in range(len(header)):
-        print('%s : %s \n' %(header[i], value[i]))
+        if float(value[i].strip()) != 0:
+            print('%s : %s \n' %(header[i], value[i]))
 
-read_csv()
+read_csv(sys.argv[1])

@@ -251,13 +251,16 @@ def make_csv(csv_filename, in_bumat_dict, out_bumat_dict,
     """
 
     # parse through, get keff value
-    keff = keff_dict['keff'][0]
+    boc_keff = keff_dict['keff'][0]
+    eoc_keff = keff_dict['keff'][1]
     deptime = find_deptime(input_file)
     
     with open(csv_filename, 'w') as csv_file:
         writer = csv.writer(csv_file)
         # fresh iso_list
-        header_list = ['f'+iso for iso in iso_list] + ['keff'] + ['deptime'] + ['d'+iso for iso in iso_list] 
+        header_list = (['f'+iso for iso in iso_list] +
+                      ['boc_keff', 'eoc_keff', 'deptime'] +
+                      ['d'+iso for iso in iso_list])
         writer.writerow(header_list)
         # initialize as zero
         fresh_adens_list = [0] * len(iso_list)
@@ -271,7 +274,7 @@ def make_csv(csv_filename, in_bumat_dict, out_bumat_dict,
                 index = iso_list.index(key)
                 dep_adens_list[index] = out_bumat_dict[key] 
 
-        row = fresh_adens_list + [keff, deptime] + dep_adens_list
+        row = fresh_adens_list + [boc_keff, eoc_keff, deptime] + dep_adens_list
         # add keff value to adens list, like header
         writer.writerow(row)
 
