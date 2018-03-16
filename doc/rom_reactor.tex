@@ -76,7 +76,7 @@ To generate a \gls{ROM}, large amounts of data tends to make the
 output space for the SERPENT \gls{ROM}:
 
 \begin{center}
-\begin{tabular}{ c c }
+\begin{tabular}{ l l }
     \hline
     Input Space & `Fresh' Composition , Depletion time \\
     \hline
@@ -97,7 +97,7 @@ the form shown in \ref{tab:csv}.
 
 \begin{table}
 \begin{center}
-\begin{tabular}{ c c }
+\begin{tabular}{ l l }
     \hline
     Andrei's data & Details \\
     \hline
@@ -118,7 +118,7 @@ the form shown in \ref{tab:csv}.
 \begin{table}
 
 \begin{center}
-\begin{tabular}{ c c }
+\begin{tabular}{ l l }
     \hline
     Curated dataset & Method \\
     \hline
@@ -156,7 +156,7 @@ for SERPENT input and better explained in a table in table \ref{tab:comp}.
 %%% CHECK AGAIN
 \begin{table}
 \begin{center}
-\begin{tabular}{ c c }
+\begin{tabular}{ l l }
     \hline
     Isotopes & Mass Fraction \\
     \hline
@@ -188,12 +188,12 @@ Currently the datasets available are listed in table \ref{tab:data}.
 
 \begin{table}
 \begin{center}
-\begin{tabular}{ c c c}
+\begin{tabular}{ l l l}
     \hline
     Available Datasets & Details & Number of SERPENT Runs \\
     \hline
-    Andrei's Saltproc run & Mixed, reprocessed input composition & 290 \\
-    Startup fuel variation & from Robertson \cite{robertson_conceptual_1971}, range of input & 1600 = $40_{Composition} * 40_{Deptime}$ \\
+    andrei_saltproc_run & Mixed, reprocessed input composition & 290 \\
+    1600_startup_composition_deptime & from Robertson \cite{robertson_conceptual_1971}, range of input & 1600 = $40_{Composition} * 40_{Deptime}$ \\
     \hline
 \end{tabular}
 \label{tab:data}
@@ -204,6 +204,9 @@ Currently the datasets available are listed in table \ref{tab:data}.
 Data from both Andrei's saltproc run and RAVEN-run SERPENT
 input is put together into one csv (\textbf{serpent\_run\_data.csv}), and is used to train the ROM. The ROM generation input file
 is \textbf{generate\_rom\_from\_csv.xml}. 
+Two separate \glspl{ROM} were generated for criticality and depletion calculation. Preliminary tests
+show that having separate ROMs for each function yielded better results, especially for criticality
+calculations because it only has one output variable. 
 
 \section*{Thrust 3. Validate \gls{ROM} calculation with SERPENT runs}
 
