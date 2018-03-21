@@ -133,7 +133,60 @@ the form shown in \ref{tab:csv}.
 \end{table}
 
 
+%%Tikz diagram of workflow
+
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=5em, text badly centered,  inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=8em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{buff} = [rectangle, draw, fill=green!20, 
+    text width=8em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{kernal} = [rectangle, draw, fill=red!20, 
+    text width=, text centered, rounded corners, minimum height=3em]
+\tikzstyle{file} = [rectangle, draw, fill=green!20, 
+    text width=, text centered, rounded corners, minimum height=3em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{dummy} = [rectangle]
+\tikzstyle{cloud} = [draw, text centered, ellipse,fill=blue!20, text width=,
+    minimum height=2em]
+
+\usetikzlibrary{calc}
+
+\begin{figure}[!ht]
+\begin{tikzpicture}[node distance = 2.5cm and 2cm, auto]
+    % Place nodes
+    \node [kernal] (RAVEN) {RAVEN};
+    \node [cloud, below of=RAVEN] (int) {RAVEN-SERPENT Interface};
+    \node [kernal, below of=int] (SERPENT) {SERPENT};
+    \begin{scope}[node distance=6cm]
+    \node [file, right of=SERPENT] (data) {SERPENT output data files (.csv)};
+    \end{scope}
+    \begin{scope}[node distance= 12cm]
+    \node [file, right of=RAVEN] (ext) {External database (Andrei)};
+    \node [cloud, right of=int] (cur) {Data curation to fit in RAVEN};
+    \end{scope}
+    
+    \node [kernal, below of=data] (proc) {RAVEN (Process to one csv file) };
+    \node [file, below of=proc] (database) {Compilation of SERPENT run data};
+    \node [kernal, below of=database] (romgen) {RAVEN (ROM generation)};
+    \node [file, below of=romgen] (rom) {Created SERPENT ROM};
+
+    \path [line] (RAVEN) -- (int);
+    \path [line] (int) -- (SERPENT);
+    \path [line] (SERPENT) -- (data);
+    \path [line] (data) -- (proc);
+    \path [line] (ext) -- (cur);
+    \path [line] (cur) |- (proc);
+    \path [line] (proc) -- (database);
+    \path [line] (database) -- (romgen);
+    \path [line] (romgen) -- (rom);
+    
+    \end{tikzpicture}
+\caption{Workflow of Creating the \gls{ROM} for SERPENT.}
+\end{figure}
+
 \subsection*{Aside: SERPENT-RAVEN interface}
+
 
 By creating the SERPENT-RAVEN interface, RAVEN can run SERPENT
 with varying parameters to generate SERPENT run data. For example,
@@ -183,7 +236,7 @@ different initial reprocessing frequencies.
 This creates an input grid of 40X40 = 1600 inputs to
 train the ROM in.
 
-Currently the datasets available are listed in table \ref{tab:data}.
+The datasets currently available are listed in table \ref{tab:data}.
 
 \begin{table}
 \begin{center}
@@ -191,8 +244,8 @@ Currently the datasets available are listed in table \ref{tab:data}.
     \hline
     Available Datasets & Details & Number of SERPENT Runs \\
     \hline
-    andrei_saltproc_run & Mixed, reprocessed input composition & 290 \\
-    1600_startup_composition_deptime & from Robertson \cite{robertson_conceptual_1971}, range of input & 1600 = $40_{Composition} * 40_{Deptime}$ \\
+    andrei saltproc run & Mixed, reprocessed input composition & 290 \\
+    1600 startup composition deptime & from Robertson \cite{robertson_conceptual_1971}, range of input & 1600 = $40_{Composition} * 40_{Deptime}$ \\
     \hline
 \end{tabular}
 \label{tab:data}
