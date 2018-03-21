@@ -15,8 +15,12 @@
 
 
  <VariableGroups>
-    <Group name="feature_space"><xi:include href="feature_isotopes">,deptime</Group>
-    <Group name="target_space">boc_keff, eoc_keff,<xi:include href="target_isotopes"></Group>
+    <Group name="feature_space">
+      <xi:include href="feature_isotopes"/>,deptime
+    </Group>
+    <Group name="target_space">
+      boc_keff, eoc_keff, <xi:include href="target_isotopes"/>
+    </Group>
   </VariableGroups>
 
   <Models>

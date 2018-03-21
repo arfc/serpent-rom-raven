@@ -14,15 +14,19 @@
     <Input name="input_csv" type="">input.csv</Input>
   </Files>
   <VariableGroups>
-    <Group name="feature_space"><xi:include href="feature_isotopes">, deptime</Group>
-    <Group name="target_space"> <xi:include href="target_isotopes"> </Group>
+    <Group name="feature_space">
+      <xi:include href="feature_isotopes"/>, deptime
+    </Group>
+    <Group name="target_space">
+     <xi:include href="target_isotopes"/> 
+    </Group>
   </VariableGroups>
 
 <Samplers>
     <CustomSampler name="custom">
         <Source class="DataObjects" type="PointSet">input_data</Source>
 
-        <xi:include href="custom_variable.xml">
+        <xi:include href="custom_variable.xml"/>
         <variable name="deptime"/>
 
     </CustomSampler>

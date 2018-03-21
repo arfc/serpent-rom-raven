@@ -10,12 +10,14 @@
   </RunInfo>
 
   <VariableGroups>
-    <Group name="feature_space"><xi:include href="feature_isotopes">,deptime</Group>
+    <Group name="feature_space">
+       <xi:include href="feature_isotopes"/>,deptime
+    </Group>
     <Group name="target_space">boc_keff, eoc_keff</Group>
   </VariableGroups>
 
   <Files>
-    <Input name="rom_output"    type="">keff_rom</Input>
+    <Input name="rom_output"    type="">keff_rom_svm</Input>
     <Input name="inputcsv" type="">1600_startup_composition_deptime.csv</Input>
   </Files>
 
@@ -26,9 +28,7 @@
     <ROM name='rom' subType='SciKitLearn'>
       <Features>feature_space</Features>
       <Target>target_space</Target>
-      <SKLtype>linear_model|LinearRegression</SKLtype>
-      <fit_intercept>True</fit_intercept>
-      <normalize>False</normalize>
+      <SKLtype>svm|SVR</SKLtype>
     </ROM>
   </Models>
 
