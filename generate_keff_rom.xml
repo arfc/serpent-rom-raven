@@ -1,6 +1,4 @@
-<Simulation verbosity="all" 
-            xml:base="./aux-input-files/" 
-            xmlns:xi="http://www.w3.org/2001/XInclude">
+<Simulation verbosity="all" xmlns:xi="http://www.w3.org/2001/XInclude">
   <RunInfo>
     <WorkingDir>data</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
@@ -11,14 +9,14 @@
 
   <VariableGroups>
     <Group name="feature_space">
-       <xi:include href="feature_isotopes"/>,deptime
+       <xi:include href="./aux-input-files/feature_isotopes#xpointer(/feature_isotopes/child::*)"/>, deptime
     </Group>
     <Group name="target_space">boc_keff, eoc_keff</Group>
   </VariableGroups>
 
   <Files>
     <Input name="rom_output"    type="">keff_rom_svm</Input>
-    <Input name="inputcsv" type="">1600_startup_composition_deptime.csv</Input>
+    <Input name="inputcsv" type="">combined.csv</Input>
   </Files>
 
   <Models>
@@ -29,6 +27,7 @@
       <Features>feature_space</Features>
       <Target>target_space</Target>
       <SKLtype>svm|SVR</SKLtype>
+      <kernel>rbf</kernel>
     </ROM>
   </Models>
 
