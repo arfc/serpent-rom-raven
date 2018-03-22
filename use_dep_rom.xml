@@ -1,6 +1,4 @@
-<Simulation verbosity="all" 
-            xml:base="./aux-input-files/" 
-            xmlns:xi="http://www.w3.org/2001/XInclude">
+<Simulation verbosity="all">
   <RunInfo>
     <WorkingDir>rom</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
@@ -14,19 +12,21 @@
     <Input name="input_csv" type="">input.csv</Input>
   </Files>
   <VariableGroups>
-    <Group name="feature_space">
-      <xi:include href="feature_isotopes"/>, deptime
-    </Group>
-    <Group name="target_space">
-     <xi:include href="target_isotopes"/> 
-    </Group>
+    <ExternalXML node='Group'
+                 xmlToLoad='./aux-input-files/feature_isotopes.xml'/>
+
+    <ExternalXML node='Group'
+                 xmlToLoad='./aux-input-files/target_isotopes.xml'/>
   </VariableGroups>
 
 <Samplers>
     <CustomSampler name="custom">
         <Source class="DataObjects" type="PointSet">input_data</Source>
 
-        <xi:include href="custom_variable.xml"/>
+        
+        <ExternalXML node='variable'
+                     xmlToLoad='./aux-input-files/custom_variable.xml'/>
+
         <variable name="deptime"/>
 
     </CustomSampler>

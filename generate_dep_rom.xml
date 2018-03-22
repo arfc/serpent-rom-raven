@@ -1,6 +1,4 @@
-<Simulation verbosity="all" 
-            xml:base="./aux-input-files/"
-            xmlns:xi="http://www.w3.org/2001/XInclude">
+<Simulation verbosity="all">
   <RunInfo>
     <WorkingDir>data</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
@@ -10,12 +8,11 @@
   </RunInfo>
 
   <VariableGroups>
-    <Group name="feature_space">
-      <xi:include href="feature_isotopes" parse="text"/>, deptime
-    </Group>
-    <Group name="target_space">
-      <xi:include href="target_isotopes" parse="text"/>
-    </Group>
+    <ExternalXML node='Group'
+                 xmlToLoad='./aux-input-files/feature_isotopes.xml'/>
+
+    <ExternalXML node='Group'
+                 xmlToLoad='./aux-input-files/target_isotopes.xml'/>
   </VariableGroups>
 
   <Files>

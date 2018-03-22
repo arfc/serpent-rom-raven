@@ -1,6 +1,4 @@
-<Simulation verbosity="all"
-            xml:base="./aux-input-files/" 
-            xmlns:xi="http://www.w3.org/2001/XInclude">
+<Simulation verbosity="all">
   <RunInfo>
     <WorkingDir>run_serpent_with_raven</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
@@ -15,12 +13,12 @@
 
 
  <VariableGroups>
-    <Group name="feature_space">
-      <xi:include href="feature_isotopes" parse="text"/>,deptime
-    </Group>
-    <Group name="target_space">
-      boc_keff, eoc_keff, <xi:include href="target_isotopes" parse="text"/>
-    </Group>
+    <ExternalXML node='Group'
+                 xmlToLoad='./aux-input-files/feature_isotopes.xml'/>    
+
+    <ExternalXML node='Group'
+                 xmlToLoad='./aux-input-files/target_isotopes_keff.xml'/>
+
   </VariableGroups>
 
   <Models>
