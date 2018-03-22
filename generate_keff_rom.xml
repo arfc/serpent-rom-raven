@@ -1,4 +1,5 @@
-<Simulation verbosity="all" xmlns:xi="http://www.w3.org/2001/XInclude">
+<?xml version="1.0"?>
+<Simulation xmlns:xi="http://www.w3.org/2001/XInclude" verbosity="all">
   <RunInfo>
     <WorkingDir>data</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
@@ -9,13 +10,13 @@
 
   <VariableGroups>
     <Group name="feature_space">
-       <xi:include href="./aux-input-files/feature_isotopes#xpointer(/feature_isotopes/child::*)"/>, deptime
+       <xi:include href="./aux-input-files/feature_isotopes" parse="text"/>, deptime
     </Group>
     <Group name="target_space">boc_keff, eoc_keff</Group>
   </VariableGroups>
 
   <Files>
-    <Input name="rom_output"    type="">keff_rom_svm</Input>
+    <Input name="rom_output" type="">keff_rom_svm</Input>
     <Input name="inputcsv" type="">combined.csv</Input>
   </Files>
 
@@ -23,7 +24,7 @@
     <!-- Defines ROM specifics, from library(subType),
          independent variable(Features), dependent variable(Target),
          algorithm (SKLtype) and etc. -->
-    <ROM name='rom' subType='SciKitLearn'>
+    <ROM name="rom" subType="SciKitLearn">
       <Features>feature_space</Features>
       <Target>target_space</Target>
       <SKLtype>svm|SVR</SKLtype>
@@ -31,23 +32,21 @@
     </ROM>
   </Models>
 
-
-
   <Steps>
     <IOStep name="get_input">
       <!-- In the IOStep the serpent-output-converted-csv files are logged into output-->
-      <Input  class="Files" type=""   >inputcsv</Input>
-      <Output  class="DataObjects"  type="PointSet"     >inputdata</Output>
+      <Input class="Files" type="">inputcsv</Input>
+      <Output class="DataObjects" type="PointSet">inputdata</Output>
     </IOStep>
-    <RomTrainer name='make_rom'>
+    <RomTrainer name="make_rom">
       <!-- Given the dataset, generate ROM using Scikit-learn -->
-      <Input class='DataObjects'   type='PointSet'  >inputdata</Input>
-      <Output class='Models'     type='ROM'         >rom</Output>
+      <Input class="DataObjects" type="PointSet">inputdata</Input>
+      <Output class="Models" type="ROM">rom</Output>
     </RomTrainer>
-    <IOStep name='rom_dump'>
+    <IOStep name="rom_dump">
       <!-- Save the rom as rom_output-->
-      <Input class='Models'      type='ROM'         >rom</Input>
-      <Output class='Files'      type=''            >rom_output</Output>
+      <Input class="Models" type="ROM">rom</Input>
+      <Output class="Files" type="">rom_output</Output>
     </IOStep>
   </Steps>
 
