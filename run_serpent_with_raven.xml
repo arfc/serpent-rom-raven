@@ -33,37 +33,70 @@
 
   <Distributions>
     <!-- uniform distribution from 0.1 to 1 -->
-    <Uniform name="u233_mass_frac">
-      <lowerBound>-1.0912296769</lowerBound>
-      <upperBound>-0.7307144667</upperBound>
-    </Uniform>
-    <Uniform name="deptime">
-      <lowerBound>1</lowerBound>
-      <upperBound>10</upperBound>
+    <Uniform name="u233_mole_frac">
+      <lowerBound>0.2</lowerBound>
+      <upperBound>0.3</upperBound>
     </Uniform>
   </Distributions>
 
   <Functions>
-    <External name='li7_mass_frac' file='calc_li7_mass_frac'>
-      <variable>u233_mass_frac</variable>
+    <External name='li7_mass_frac' file='calc_li7'>
+      <variable>u233_mole_frac</variable>
+    </External>
+
+    <External name='li6_mass_frac' file='calc_li6'>
+      <variable>u233_mole_frac</variable>
+    </External>
+
+    <External name='f19_mass_frac' file='calc_f19'>
+      <variable>u233_mole_frac</variable>
+    </External>
+
+    <External name='be9_mass_frac' file='calc_be9'>
+      <variable>u233_mole_frac</variable>
+    </External>
+
+    <External name='th232_mass_frac' file='calc_th232'>
+      <variable>u233_mole_frac</variable>
+    </External>
+
+    <External name='u233_mass_frac' file='calc_u233'>
+      <variable>u233_mole_frac</variable>
     </External>
   </Functions>
 
   <Samplers>
     <Grid name="myGrid">
-      <variable name="u233_mass_frac">
-        <distribution>u233_mass_frac</distribution>
-        <!-- equally spaced steps with lower and upper bound -->
-        <grid construction="equal" steps="200" type="CDF">0.0 1</grid>
-      </variable>
-      <variable name="li7_mass_frac">
-        <function>li7_mass_frac</function>
-      </variable>
-      <variable name="deptime">
-        <distribution>deptime</distribution>
+      <variable name="u233_mole_frac">
+        <distribution>u233_mole_frac</distribution>
         <!-- equally spaced steps with lower and upper bound -->
         <grid construction="equal" steps="3" type="CDF">0.0 1</grid>
       </variable>
+
+      <variable name="li7_mass_frac">
+        <function>li7_mass_frac</function>
+      </variable>
+
+      <variable name="li6_mass_frac">
+        <function>li6_mass_frac</function>
+      </variable>
+
+      <variable name="f19_mass_frac">
+        <function>f19_mass_frac</function>
+      </variable>
+
+      <variable name="be9_mass_frac">
+        <function>be9_mass_frac</function>
+      </variable>
+
+      <variable name="th232_mass_frac">
+        <function>th232_mass_frac</function>
+      </variable>
+
+      <variable name="u233_mass_frac">
+        <function>u233_mass_frac</function>
+      </variable>
+
     </Grid>
   </Samplers>
 

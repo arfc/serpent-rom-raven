@@ -2,17 +2,15 @@ set title "MSBR, no Th,U-233 8.5E-11, after 400 days 7.75E-1"
 
 include "/projects/sciteam/bahg/projects/raven/framework/CodeInterfaces/SERPENT/input/geom_file"
 
-% --- Fuel (LiF-BeF2-ThF4-233UF4-239PuF3 72-16-12-0.232-0.0006 mole %) Table 3.7 Robertson:
+% --- Fuel with UF4 mole frac of : $RAVEN-u233_mole_frac$
 mat fuel    -3.3304 burn 1 % g/cm3 for mixture
 rgb 253 231 37 vol 1.95057E+07 
 3007.09c   $RAVEN-li7_mass_frac$    % Mass fraction of Li-7 
-3006.09c   -3.2439E-4   % Mass fraction of Li-6
-9019.09c   -45.419814   % Mass fraction of F-19
-4009.09c   -2.257411    % Mass fraction of Be-9
-90232.09c  -43.591433   % Mass fraction of Th-232
-91233.09c  -0.00         % Mass fraction of Pa-233
-92233.09c  $RAVEN-u233_mass_frac$  % Mass fraction of U-233 (0.232% mole)
-94239.09c  -2.2455E-4   % Mass fraction of Pu-239 (0.0006% mole)
+3006.09c   $RAVEN-li6_mass_frac$   % Mass fraction of Li-6
+9019.09c   $RAVEN-f19_mass_frac$   % Mass fraction of F-19
+4009.09c   $RAVEN-be9_mass_frac$    % Mass fraction of Be-9
+90232.09c  $RAVEN-th232_mass_frac$   % Mass fraction of Th-232
+92233.09c  $RAVEN-u233_mass_frac$  % Mass fraction of U-233
 % --- Moderator graphite:
 mat moder    -1.843 rgb 68 1 84 tmp 900 moder gr 6000 6000.09c    -1.0
 % --- Hastelloy N
@@ -128,7 +126,7 @@ set powdens 6.666E-3    %22.2kW/l Robertson
 %set power 2250000000.0 % 2.25 GW(th)
 
 dep daystep % 3x100 + 33 steps
-$RAVEN-deptime$ % 30 days cycle
+3 % 30 days cycle
 
 
 %---- Print compositions of depleted materials after each step
