@@ -10,7 +10,7 @@
 
   <VariableGroups>
     <ExternalXML node='Group'
-                 xmlToLoad='./aux-input-files/feature_isotopes'/>
+                 xmlToLoad='./aux-input-files/feature_isotopes.xml'/>
     <Group name="target_space">boc_keff, eoc_keff</Group>
   </VariableGroups>
 
