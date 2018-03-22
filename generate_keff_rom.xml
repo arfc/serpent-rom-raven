@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Simulation xmlns:xi="http://www.w3.org/2001/XInclude" verbosity="all">
+<Simulation verbosity="all">
   <RunInfo>
     <WorkingDir>data</WorkingDir>
     <!-- ordered list of step names that RAVEN will run -->
@@ -9,9 +9,8 @@
   </RunInfo>
 
   <VariableGroups>
-    <Group name="feature_space">
-       <xi:include href="./aux-input-files/feature_isotopes" parse="text"/>, deptime
-    </Group>
+    <ExternalXML node='Group'
+                 xmlToLoad='./aux-input-files/feature_isotopes'/>
     <Group name="target_space">boc_keff, eoc_keff</Group>
   </VariableGroups>
 
