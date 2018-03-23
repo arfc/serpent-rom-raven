@@ -178,7 +178,7 @@ class Serpent(CodeInterfaceBase):
     outbumatfile = os.path.join(workDir, filename+".bumat1")
     # get the list of isotopes to track
     script_loc = os.path.dirname(os.path.realpath(sys.argv[0]))
-    isofile = os.path.join(script_loc, 'CodeInterfaces/SERPENT/iso_file')
+    isofile = os.path.join(script_loc, 'CodeInterfaces/SERPENT/aux-input-files/iso_file')
     iso_list = op.read_file_into_list(isofile)
     # parse files into dictionary
     keff_dict = op.search_keff(resfile)
