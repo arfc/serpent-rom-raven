@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<Simulation verbosity="all">
+  <RunInfo>
+    <WorkingDir>rom</WorkingDir>
+    <!-- ordered list of step names that RAVEN will run -->
+    <Sequence>get_input, make_rom, rom_dump</Sequence>
+    <!-- number of parallel runs executed simultaneously -->
+    <batchSize>1</batchSize>
+  </RunInfo>
+
+  <Files>
+    <Input name="rom_output" type="">linear_rom.pk</Input>
+    <Input name="inputcsv" type="">data.csv</Input>
+  </Files>
+
+  <Models>
+    <!-- Defines ROM specifics, from library(subType),
+         independent variable(Features), dependent variable(Target),
+         algorithm (SKLtype) and etc. -->
+    <ROM name="rom" subType="SciKitLearn">
+      <Features>ex, yi</Features>
+      <Target>zee</Target>
+      <SKLtype>linear_model|LinearRegression</SKLtype>
+    </ROM>
+  </Models>
+
+  <Steps>
+    <IOStep name="get_input">
+      <!-- In the IOStep the serpent-output-converted-csv files are logged into output-->
+      <Input class="Files" type="">inputcsv</Input>
+      <Output class="DataObjects" type="PointSet">inputdata</Output>
+    </IOStep>
+    <RomTrainer name="make_rom">
+      <!-- Given the dataset, generate ROM using Scikit-learn -->
+      <Input class="DataObjects" type="PointSet">inputdata</Input>
+      <Output class="Models" type="ROM">rom</Output>
+    </RomTrainer>
+    <IOStep name="rom_dump">
+      <!-- Save the rom as rom_output-->
+      <Input class="Models" type="ROM">rom</Input>
+      <Output class="Files" type="">rom_output</Output>
+    </IOStep>
+  </Steps>
+
+  <DataObjects>
+    <!-- Specifies the output objects, just the rows from the
+         serpent-output-converted-csv file with column name -->
+    <PointSet name="inputdata">
+      <Input>ex, yi</Input>
+      <Output>zee</Output>
+    </PointSet>
+  </DataObjects>
+
+</Simulation>
